@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-4-28 14:52:21 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+   <class name="cn.edu.sxau.electivesystem.entity.StudentCourseR" table="T_STUDENTCOURSE_R">
+        <id name="id" type="java.lang.Integer">
+            <column name="ID" />
+            <generator class="native" />
+        </id>
+        <many-to-one name="student" class="cn.edu.sxau.electivesystem.entity.Student" fetch="join">
+            <column name="STUDENT_ID" />
+        </many-to-one>
+        <many-to-one name="course" class="cn.edu.sxau.electivesystem.entity.Course" fetch="join">
+            <column name="COURSE_ID" />
+        </many-to-one>
+        <property name="score" type="java.lang.Float">
+            <column name="SCORE" />
+        </property>
+        <property name="evaluate" type="java.lang.String">
+            <column name="EVALUATE" />
+        </property>
+    </class>
+</hibernate-mapping>

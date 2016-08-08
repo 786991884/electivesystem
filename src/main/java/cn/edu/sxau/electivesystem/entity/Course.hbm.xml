@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-4-28 14:52:21 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="cn.edu.sxau.electivesystem.entity.Course" table="T_COURSE">
+		<id name="id" type="java.lang.Integer">
+			<column name="ID" />
+			<generator class="native" />
+		</id>
+		<property name="name" type="java.lang.String">
+			<column name="NAME" />
+		</property>
+		<property name="time" type="java.lang.String">
+			<column name="TIME" />
+		</property>
+		<property name="place" type="java.lang.String">
+			<column name="PLACE" />
+		</property>
+		<property name="credit" type="java.lang.Integer">
+			<column name="CREDIT" />
+		</property>
+		<property name="selnum" type="java.lang.Integer">
+			<column name="SELNUM" />
+		</property>
+		<property name="memo" type="java.lang.String">
+			<column name="MEMO" />
+		</property>
+		<many-to-one name="teacher" class="cn.edu.sxau.electivesystem.entity.Teacher" fetch="join">
+			<column name="TEACHER_ID" not-null="false" />
+		</many-to-one>
+		<set name="studentCourseRs" table="T_STUDENT_COURSE_R" inverse="true" lazy="true">
+			<key>
+				<column name="COURSE_ID" />
+			</key>
+			<one-to-many class="cn.edu.sxau.electivesystem.entity.StudentCourseR" />
+		</set>
+	</class>
+</hibernate-mapping>

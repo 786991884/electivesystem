@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2014-3-22 15:47:43 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="cn.edu.sxau.electivesystem.entity.User" table="T_USER">
+		<id name="id" type="int">
+			<column name="ID" />
+			<generator class="native" />
+		</id>
+		<property name="name" type="java.lang.String">
+			<column name="NAME" />
+		</property>
+		<property name="password" type="java.lang.String">
+			<column name="PASSWORD" />
+		</property>
+		<property name="email" type="java.lang.String">
+			<column name="EMAIL" />
+		</property>
+		<property name="realName" type="java.lang.String">
+			<column name="REALNAME" />
+		</property>
+		<property name="gender" type="java.lang.String">
+			<column name="GENDER" />
+		</property>
+		<property name="address" type="java.lang.String">
+			<column name="ADDRESS" />
+		</property>
+		<property name="phone" type="java.lang.String">
+			<column name="PHONE" />
+		</property>
+		<property name="postCode" type="java.lang.String">
+			<column name="POSTCODE" />
+		</property>
+		<property name="mobil" type="java.lang.String">
+			<column name="MOBIL" />
+		</property>
+		<property name="score" type="java.lang.Float">
+			<column name="SCORE" />
+		</property>
+		<property name="birthday" type="java.lang.String">
+			<column name="BIRTHDAY" />
+		</property>
+	</class>
+</hibernate-mapping>

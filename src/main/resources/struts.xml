@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<!-- 指定由spring负责action对象的创建 -->
+	<constant name="struts.objectFactory" value="spring" />
+	<!-- 所有匹配*.action的请求都由struts2处理 -->
+	<constant name="struts.action.extension" value="action" />
+	<!-- 不用struts2的主题 -->
+	<constant name="struts.ui.theme" value="simple" />
+	<!-- 是否启用开发模式 -->
+	<constant name="struts.devMode" value="false" />
+	<!-- struts配置文件改动后，是否重新加载 -->
+	<constant name="struts.configuration.xml.reload" value="true" />
+	<!-- 设置浏览器是否缓存静态内容 -->
+	<constant name="struts.serve.static.browserCache" value="false" />
+	<!-- 请求参数的编码方式 -->
+	<constant name="struts.i18n.encoding" value="utf-8" />
+	<!-- 每次HTTP请求系统都重新加载资源文件，有助于开发 -->
+	<constant name="struts.i18n.reload" value="true" />
+	<!-- 文件上传最大值 -->
+	<constant name="struts.multipart.maxSize" value="104857600" />
+	<!-- 让struts2支持动态方法调用 -->
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
+	<!-- Action名称中是否可使用斜线 -->
+	<constant name="struts.enable.SlashesInActionNames" value="false" />
+	<!-- 允许标签中使用表达式语法 -->
+	<constant name="struts.tag.altSyntax" value="true" />
+
+	<package name="mypk1" namespace="/admin" extends="struts-default ">
+		<interceptors>
+			<interceptor name="loginInterceptor" class="usermanage.admin.interceptor.LoginInterceptor"></interceptor>
+			<interceptor-stack name="mystack">
+				<!-- <interceptor-ref name="loginInterceptor"></interceptor-ref> -->
+				<interceptor-ref name="defaultStack">
+					<param name="modelDriven.refreshModelBeforeResult">true</param>
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="mystack" />
+		<global-results>
+			<result name="userlogin">/admin/login.jsp</result>
+		</global-results>
+
+		<action name="userlogin" class="loginAction" method="login">
+			<result>/commons/main.jsp</result>
+			<result name="input">/admin/login.jsp</result>
+		</action>
+		<action name="login" class="studentAction" method="login">
+			<result>/commons/main.jsp</result>
+			<result name="input">/admin/login.jsp</result>
+		</action>
+		<action name="personalInfo" class="loginAction" method="personalInfo">
+			<result name="studentInfo">/admin/studentInfo.jsp</result>
+			<result name="teacherInfo">/admin/teacherInfo.jsp</result>
+			<result name="userInfo">/admin/userInfo.jsp</result>
+		</action>
+		<action name="changePwd" class="loginAction" method="changePwd">
+			<result name="input">/admin/changePwd.jsp</result>
+			<result type="redirectAction">
+				<param name="actionName">personalInfo</param>
+				<param name="namespace">/admin</param>
+			</result>
+		</action>
+		<action name="toChangePwd" class="studentAction" method="toChangePwd">
+			<result>/admin/changePwd.jsp</result>
+		</action>
+		<!-- 用户 -->
+		<action name="userList" class="userAction" method="userList">
+			<result>/admin/userList.jsp</result>
+		</action>
+		<action name="userView" class="userAction" method="userView">
+			<result>/admin/userView.jsp</result>
+		</action>
+		<action name="toUserEdit" class="userAction" method="toUserEdit">
+			<result>/admin/userEdit.jsp</result>
+		</action>
+		<action name="userEdit" class="userAction" method="userEdit">
+			<result type="redirectAction">
+				<param name="actionName">userList</param>
+				<param name="namespace">/admin</param>
+			</result>
+		</action>
+		<action name="userAdd" class="userAction" method="userAdd">
+			<result type="redirectAction">
+				<param name="actionName">userList</param>
+				<param name="namespace">/admin</param>
+			</result>
+		</action>
+		<action name="toUserAdd" class="userAction" method="toUserAdd">
+			<result>/admin/userAdd.jsp</result>
+		</action>
+		<action name="userDel" class="userAction" method="userDel">
+			<result type="redirectAction">
+				<param name="actionName">userList.action</param>
+				<param name="namespace">/admin</param>
+			</result>
+		</action>
+		<action name="usersDel" class="userAction" method="usersDel">
+			<result type="redirectAction">
+				<param name="actionName">userList.action</param>
+				<param name="namespace">/admin</param>
+			</result>
+		</action>
+		<!-- 学生 -->
+		<action name="selCourseDel" class="studentAction" method="selCourseDel">
+			<result type="redirectAction">
+				<param name="actionName">selResult</param>
+				<param name="namespace">/admin</param>
+			</result>
+		</action>
+		<action name="toSelCourse" class="studentAction" method="toSelCourse">
+			<result>/student/selCourse.jsp</result>
+		</action>
+		<action name="selResult" class="studentAction" method="selResult">
+			<result>/student/selResult.jsp</result>
+		</action>
+		<action name="scoreResult" class="studentAction" method="scoreResult">
+			<result>/student/scoreResult.jsp</result>
+		</action>
+		<action name="selCourse" class="studentAction" method="selCourse">
+			<result name="input">/student/selCourseError.jsp</result>
+			<result name="error">/student/moreCredit.jsp</result>
+			<result type="redirectAction">
+				<param name="actionName">toSelCourse</param>
+				<param name="namespace">/admin</param>
+			</result>
+		</action>
+		<action name="studentList" class="studentAction" method="studentList">
+			<result>/student/studentList.jsp</result>
+		</action>
+		<action name="studentView" class="studentAction" method="studentView">
+			<result>/student/studentView.jsp</result>
+		</action>
+		<action name="toStudentEdit" class="studentAction" method="toStudentEdit">
+			<result>/student/studentEdit.jsp</result>
+		</action>
+		<action name="studentEdit" class="studentAction" method="studentEdit">
+			<result type="redirectAction">
+				<param name="actionName">studentList</param>
+				<param name="namespace">/admin</param>
+			</result>
+		</action>
+		<action name="studentAdd" class="studentAction" method="studentAdd">
+			<result type="redirectAction">
+				<param name="actionName">studentList</param>
+				<param name="namespace">/admin</param>
+			</result>
+		</action>
+		<action name="toStudentAdd" class="studentAction" method="toStudentAdd">
+			<result>/student/studentAdd.jsp</result>
+		</action>
+		<action name="studentDel" class="studentAction" method="studentDel">
+			<result type="redirectAction">
+				<param name="actionName">studentList.action</param>
+				<param name="namespace">/admin</param>
+			</result>
+		</action>
+		<action name="studentsDel" class="studentAction" method="studentsDel">
+			<result type="redirectAction">
+				<param name="actionName">studentList.action</param>
+				<param name="namespace">/admin</param>
+			</result>
+		</action>
+		<!-- 课程 -->
+		<action name="courseList" class="courseAction" method="courseList">
+			<result>/course/courseList.jsp</result>
+		</action>
+		<action name="courseView" class="courseAction" method="courseView">
+			<result>/course/courseView.jsp</result>
+		</action>
+		<action name="toCourseEdit" class="courseAction" method="toCourseEdit">
+			<result>/course/courseEdit.jsp</result>
+		</action>
+		<action name="courseEdit" class="courseAction" method="courseEdit">
+			<result type="redirectAction">
+				<param name="actionName">courseList</param>
+				<param name="namespace">/admin</param>
+			</result>
+		</action>
+		<action name="courseAdd" class="courseAction" method="courseAdd">
+			<result type="redirectAction">
+				<param name="actionName">courseList</param>
+				<param name="namespace">/admin</param>
+			</result>
+		</action>
+		<action name="toCourseAdd" class="courseAction" method="toCourseAdd">
+			<result>/course/courseAdd.jsp</result>
+		</action>
+		<action name="courseDel" class="courseAction" method="courseDel">
+			<result type="redirectAction">
+				<param name="actionName">courseList.action</param>
+				<param name="namespace">/admin</param>
+			</result>
+		</action>
+		<action name="coursesDel" class="courseAction" method="coursesDel">
+			<result type="redirectAction">
+				<param name="actionName">courseList.action</param>
+				<param name="namespace">/admin</param>
+			</result>
+		</action>
+		<!-- 教师 -->
+		<action name="teacherList" class="teacherAction" method="teacherList">
+			<result>/teacher/teacherList.jsp</result>
+		</action>
+		<action name="teacherView" class="teacherAction" method="teacherView">
+			<result>/teacher/teacherView.jsp</result>
+		</action>
+		<action name="toTeacherEdit" class="teacherAction" method="toTeacherEdit">
+			<result>/teacher/teacherEdit.jsp</result>
+		</action>
+		<action name="teacherEdit" class="teacherAction" method="teacherEdit">
+			<result type="redirectAction">
+				<param name="actionName">teacherList</param>
+				<param name="namespace">/admin</param>
+			</result>
+		</action>
+		<action name="teacherAdd" class="teacherAction" method="teacherAdd">
+			<result type="redirectAction">
+				<param name="actionName">teacherList</param>
+				<param name="namespace">/admin</param>
+			</result>
+		</action>
+		<action name="toTeacherAdd" class="teacherAction" method="toTeacherAdd">
+			<result>/teacher/teacherAdd.jsp</result>
+		</action>
+		<action name="teacherDel" class="teacherAction" method="teacherDel">
+			<result type="redirectAction">
+				<param name="actionName">teacherList.action</param>
+				<param name="namespace">/admin</param>
+			</result>
+		</action>
+		<action name="teachersDel" class="teacherAction" method="teachersDel">
+			<result type="redirectAction">
+				<param name="actionName">teacherList.action</param>
+				<param name="namespace">/admin</param>
+			</result>
+		</action>
+	</package>
+</struts>
